@@ -1,9 +1,11 @@
 package main
 
 import (
+	"encoding/csv"
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 
@@ -15,6 +17,7 @@ type extractedJob struct {
 	company  string
 	location string
 	desc     string
+	link     string
 }
 
 var baseURL string = "https://www.saramin.co.kr/zf_user/search/recruit?&searchword=NODEJS"
@@ -28,7 +31,26 @@ func main() {
 		extractedJobs := getPage(i)
 		jobs = append(jobs, extractedJobs...)
 	}
-	fmt.Println(jobs)
+	//fmt.Println(jobs)
+	writeJobs(jobs)
+	fmt.Println("Done, extracted", len(jobs))
+}
+
+func writeJobs(jobs []extractedJob) {
+	file, err := os.Create("jobs.csv")
+	checkErr(err)
+	w := csv.NewWriter(file)
+	defer w.Flush()
+
+	headers := []string{"Title", "Company", "Location", "Desc", "Link"}
+	wErr := w.Write(headers)
+	checkErr(wErr)
+
+	for _, job := range jobs {
+		jobSlice := []string{job.title, job.company, job.location, job.desc, job.link}
+		jwErr := w.Write(jobSlice)
+		checkErr(jwErr)
+	}
 }
 
 func getPage(page int) []extractedJob {
@@ -53,11 +75,14 @@ func getPage(page int) []extractedJob {
 }
 
 func extractJob(card *goquery.Selection) extractedJob {
+	link, _ := card.Find(".item_recruit>.area_job>.job_tit>a").Attr("href")
 	title := cleanString(card.Find(".item_recruit>.area_job>.job_tit>a").Text())
 	company := cleanString(card.Find(".item_recruit>.area_corp > .corp_name > a").Text())
 	location := cleanString(card.Find(".item_recruit>.area_job>.job_condition>span>a").Text())
 	lang := cleanString(card.Find(".item_recruit>.area_job>.job_sector>b>a").Text())
 	desc := ""
+
+	link = "saramin.co.kr" + link
 
 	var aTags []string
 	card.Find(".item_recruit > .area_job > .job_sector > a").Each(func(i int, s *goquery.Selection) {
@@ -73,7 +98,9 @@ func extractJob(card *goquery.Selection) extractedJob {
 	return extractedJob{title: title,
 		company:  company,
 		location: location,
-		desc:     desc}
+		desc:     desc,
+		link:     link,
+	}
 }
 
 func getPages() int {
