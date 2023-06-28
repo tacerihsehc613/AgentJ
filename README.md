@@ -1,6 +1,6 @@
-# SaramIn Scraper  <img src="https://github.com/tacerihsehc613/AgentJ/assets/127294863/fdb1a6d5-7435-44b4-9c6f-b6fa07dff2f7" width="50" height="auto"> 
+# SaramIn Scraper  <img src="https://github.com/tacerihsehc613/AgentJ/assets/127294863/ea206719-2488-4302-95dc-e07783af761e" width="50" height="auto"> 
 
-<img src="https://github.com/tacerihsehc613/AgentJ/assets/127294863/aba74c3f-84a9-405b-9923-d4efd6fdf3d1" width="400" height="auto">
+<img src="https://github.com/tacerihsehc613/AgentJ/assets/127294863/51c45bec-aa22-4e04-af18-79d68d65c94d" width="400" height="auto">
 
 Build a Golang scraping tool to retrieve job data of a specific stack from the SaramIn website.
 
