@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgentJ saramIn</title>
+    <style>
+        input {
+          width: 27%;
+          padding: 5px 5px;
+          font-size: 20px;
+        }
+        button {
+          display: block;
+          margin-top: 10px;
+          
+        }
+        .agentJ-logo {
+          width: 200px; 
+          height: auto;
+        }
+      </style>
+</head>
+<body>
+    <h1>AgentJ</h1>
+    <img src="/static/agentJ.png" alt="AgentJ Logo" class="agentJ-logo">
+    <h3>saramin.co.kr Scrapper</h3>
+    <form method="POST" action="/scrape">
+        <input placeholder="which job are you looking for" name="term" />
+        <button>Search</button>
+    </form>
+</body>
+</html>
